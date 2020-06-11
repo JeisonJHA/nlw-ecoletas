@@ -19,8 +19,13 @@ class GetPointService {
   public async execute(id: string): Promise<IGetPointResponseDTO> {
     const point = await this.pointsRepository.getPointById(id);
     if (!point) throw new AppError('Point doesn`t exists.');
+
+    const serializedPoint = {
+      ...point,
+      image_url: `${process.env.APP_API_URL}/uploads/${point.image}`,
+    };
     const items = await this.itemsRepository.getItemsFromPoint(id);
-    return { point, items };
+    return { point: serializedPoint, items };
   }
 }
 

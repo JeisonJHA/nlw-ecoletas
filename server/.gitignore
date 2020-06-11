@@ -2,3 +2,6 @@
 *.lock
 *-error.log
 .env
+uploads/*
+!uploads/.gitkeep
+*.sqlite

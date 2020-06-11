@@ -12,7 +12,12 @@ class GetFilterdPointService {
 
   public async execute(filter: IPointFilterDTO): Promise<Point[]> {
     const points = await this.pointsRepository.getPointWithFilter(filter);
-    return points;
+
+    const serializedPoint = points.map(point => ({
+      ...point,
+      image_url: `${process.env.APP_API_URL}/uploads/${point.image}`,
+    }));
+    return serializedPoint;
   }
 }
 

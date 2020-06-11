@@ -17,8 +17,7 @@ class PointsController {
     } = request.body;
     const createPointService = new CreatePointService();
     const point = await createPointService.execute({
-      image:
-        'https://images.unsplash.com/photo-1540661116512-12e516d30ce4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80',
+      image: request.file.filename,
       name,
       email,
       whatsapp,
@@ -26,7 +25,7 @@ class PointsController {
       longitude,
       city,
       uf,
-      items,
+      items: items.split(',').map((item: string) => Number(item.trim())),
     });
     return response.json(point);
   }
